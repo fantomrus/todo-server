@@ -7,7 +7,7 @@ const UserModel = require('../models/user-model')
 
 class TodoService {
     async addTodo(title, description, dateCompletion, priority, userResponsible, refreshToken) {
-        const todoStatus = await TodoStatusModel.findOne({value: 'Execution'})
+        const todoStatus = await TodoStatusModel.findOne({value: 'К выполнению'})
         const {_id} = await TokenService.findToken(refreshToken)
         const user = await UserModel.findOne(_id)
         return TodoModel.create({
