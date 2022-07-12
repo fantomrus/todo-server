@@ -15,14 +15,13 @@ const resultUser = async(user) => {
 }
 
 class UserService {
-    async registration(firstName, lastName, patronymic, login, password) {
+    async registration(firstName, lastName, patronymic, login, password, role) {
         const candidate = await UserModel.findOne({login})
         if (candidate) {
             throw ApiErrors.BadRequest(`Пользователь с логином ${login} уже зарегистрирован`)
         }
         const hashPassword = await bcrypt.hash(password, 3)
-        const userRole = await UserRoleModel.findOne({value: 'User'})
-        const user = await UserModel.create({firstName, lastName, patronymic, login, password: hashPassword, role: userRole.value})
+        const user = await UserModel.create({firstName, lastName, patronymic, login, password: hashPassword, role})
         return resultUser(user)
     }
     async addRole(value){
